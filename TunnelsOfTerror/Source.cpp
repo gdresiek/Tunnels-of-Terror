@@ -225,6 +225,38 @@ public:
 
 };
 
+//SEARCHES
+
+//DFS SEARCH
+class DFSsearch
+{
+	int noRooms;
+	Location* start;
+	Location* target;
+	vector<Location*> list;
+	struct Node
+	{
+		Location* location;
+		bool visited = false;
+	};
+	
+	void search()
+	{
+		
+	}
+	DFSsearch(int nR, Location* s, Location* t, vector<Location*> l)
+	{
+		noRooms = nR;
+		start = s;
+		target = t;
+		list = l;
+
+		
+	}
+
+
+};
+
 int main()
 {
 
