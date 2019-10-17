@@ -74,8 +74,11 @@ class World
 public:
 	vector<Location*> locations; //vector holding locations
 
+
+	//construcor
 	World()
 	{
+		//creating locations
 		Location* en = new Location("Entrance");
 		Location* dc = new Location("Damp Cavern");
 		Location* gr = new Location("Guard Room");
@@ -90,10 +93,51 @@ public:
 		Location* lb = new Location("Library");
 		Location* mr = new Location("Mysterious Room");
 		
-		
+		//setting up exits for each location
+		en->setExits(dc, nullptr, nullptr, nullptr);
+		dc->setExits(wr, en, gr, kt);
+		gr->setExits(ba, nullptr, nullptr, dc);
+		ba->setExits(nullptr, gr, nullptr, nullptr);
+		wr->setExits(nullptr, dc, nullptr, ld);
+		kt->setExits(gh, ib, dc, ld);
+		ib->setExits(kt, nullptr, nullptr, nullptr);
+		ld->setExits(br, wr, kt, nullptr);
+		gh->setExits(br, kt, tr, mr);
+		br->setExits(nullptr, ld, gh, nullptr);
+		tr->setExits(lb, gh, nullptr, mr);
+		lb->setExits(nullptr, tr, nullptr, mr);
+		mr->setExits(lb, tr, gh, nullptr);
 
+		//adding location to vector (for looping if needed)
+		locations.push_back(en);
+		locations.push_back(dc);
+		locations.push_back(gr);
+		locations.push_back(ba);
+		locations.push_back(wr);
+		locations.push_back(kt);
+		locations.push_back(ib);
+		locations.push_back(ld);
+		locations.push_back(gh);
+		locations.push_back(br);
+		locations.push_back(tr);
+		locations.push_back(lb);
+		locations.push_back(mr);
 	}
+
+	//destructor
+	~World() {};
 
 
 };
 
+int main()
+{
+	World* world = new World();
+
+	Player* player = new Player();
+	
+
+	
+
+	return 0;
+}
