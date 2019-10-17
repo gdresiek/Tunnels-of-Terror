@@ -88,12 +88,17 @@ void Player::travel()
 		south = true;
 	if (currentLoc->west != nullptr)
 		west = true;
-	if (currentLoc->west != nullptr)
-		west = true;
+	if (currentLoc->east != nullptr)
+		east = true;
 	cout << "Where do you want to travel? ";
 
 	while (direction < 1 || direction>4)
+	{
 		cin >> direction;
+		if (direction == -999)
+			exit(1);
+	}
+
 	if (direction == 1 && north == true)
 	{
 		setLocation(currentLoc->north);
@@ -102,7 +107,37 @@ void Player::travel()
 	{
 		cout << "You cannot travel north! Choose another direction." << endl;
 		currentLoc->getDesc();
-
+		travel();
+	}
+	if (direction == 2 && south == true)
+	{
+		setLocation(currentLoc->south);
+	}
+	else if (direction == 2 && south == false)
+	{
+		cout << "You cannot travel south! Choose another direction." << endl;
+		currentLoc->getDesc();
+		travel();
+	}
+	if (direction == 3 && west == true)
+	{
+		setLocation(currentLoc->west);
+	}
+	else if (direction == 3 && west == false)
+	{
+		cout << "You cannot travel west! Choose another direction." << endl;
+		currentLoc->getDesc();
+		travel();
+	}
+	if (direction == 4 && east == true)
+	{
+		setLocation(currentLoc->east);
+	}
+	else if (direction == 4 && east == false)
+	{
+		cout << "You cannot travel east! Choose another direction." << endl;
+		currentLoc->getDesc();
+		travel();
 	}
 }
 
@@ -186,11 +221,11 @@ int main()
 
 	while (player)
 	{
-
+		cout << "-999 to exit" << endl;
 		player->currentLoc->getDesc();
 		
-
-		cout << "Where do you want to go?" << endl;
+		player->travel();
+		
 
 	}
 	
