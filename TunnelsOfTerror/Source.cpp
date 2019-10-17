@@ -16,8 +16,13 @@ public:
 	Location* south = nullptr;
 	Location* west = nullptr;
 	Location* east = nullptr;
+	int costN = NULL;
+	int costS = NULL;
+	int costW = NULL;
+	int costE = NULL;
 
-	void setExits(Location*,Location*,Location*,Location*);
+
+	void setExits(Location*,Location*,Location*,Location*,int, int, int, int);
 	void getDesc();
 
 	Location(string,string);
@@ -38,12 +43,17 @@ void Location::getDesc()
 {
 	cout << desc << endl;
 }
-void Location::setExits(Location* n, Location* s, Location* w, Location* e)
+void Location::setExits(Location* n, Location* s, Location* w, Location* e, int costNorth, int costSouth, int costWest, int costEast)
 {
 	north = n;
 	south = s;
 	west = w;
 	east = e;
+
+	costN = costNorth;
+	costS = costSouth;
+	costW = costWest;
+	costE = costEast;
 
 }
 
@@ -52,6 +62,7 @@ class Player
 {
 public:
 	Location* currentLoc=nullptr;
+	int energy = 100;
 
 	Player();
 	~Player();
@@ -59,6 +70,7 @@ public:
 	void setLocation(Location*);
 	Location* getLocation();
 	void travel();
+	void getEnergy();
 };
 
 //PLAYER FUNCTIONS
@@ -66,6 +78,10 @@ public:
 Player::Player() {}
 Player::~Player() {}
 
+void Player::getEnergy()
+{
+	cout << "Energy left: " << energy << endl;
+}
 void Player::setLocation(Location* c)
 {
 	currentLoc = c;
@@ -101,7 +117,9 @@ void Player::travel()
 
 	if (direction == 1 && north == true)
 	{
+		energy -= currentLoc->costN;
 		setLocation(currentLoc->north);
+
 	}
 	else if (direction == 1 && north == false)
 	{
@@ -111,6 +129,7 @@ void Player::travel()
 	}
 	if (direction == 2 && south == true)
 	{
+		energy -= currentLoc->costS;
 		setLocation(currentLoc->south);
 	}
 	else if (direction == 2 && south == false)
@@ -121,6 +140,7 @@ void Player::travel()
 	}
 	if (direction == 3 && west == true)
 	{
+		energy -= currentLoc->costW;
 		setLocation(currentLoc->west);
 	}
 	else if (direction == 3 && west == false)
@@ -131,6 +151,7 @@ void Player::travel()
 	}
 	if (direction == 4 && east == true)
 	{
+		energy -= currentLoc->costE;
 		setLocation(currentLoc->east);
 	}
 	else if (direction == 4 && east == false)
@@ -167,19 +188,19 @@ public:
 		Location* mr = new Location("Mysterious Room","You are in the Mysterious Room. You get the whole mystery now. Not that amazing. You can travel north to (1)Library, south to (2)Great Hall");
 		
 		//setting up exits for each location
-		en->setExits(dc, nullptr, nullptr, nullptr);
-		dc->setExits(wr, en, gr, kt);
-		gr->setExits(ba, nullptr, nullptr, dc);
-		ba->setExits(nullptr, gr, nullptr, nullptr);
-		wr->setExits(nullptr, dc, nullptr, ld);
-		kt->setExits(gh, ib, dc, ld);
-		ib->setExits(kt, nullptr, nullptr, nullptr);
-		ld->setExits(br, wr, kt, nullptr);
-		gh->setExits(br, kt, tr, mr);
-		br->setExits(nullptr, ld, gh, nullptr);
-		tr->setExits(lb, gh, nullptr, mr);
-		lb->setExits(nullptr, tr, nullptr, mr);
-		mr->setExits(lb, tr, gh, nullptr);
+		en->setExits(dc, nullptr, nullptr, nullptr,2,NULL,NULL,NULL);
+		dc->setExits(wr, en, gr, kt,1,2,1,2);
+		gr->setExits(ba, nullptr, nullptr, dc,2,NULL,NULL,1);
+		ba->setExits(nullptr, gr, nullptr, nullptr,NULL,2,NULL,NULL);
+		wr->setExits(nullptr, dc, nullptr, ld,NULL,1,NULL,10);
+		kt->setExits(gh, ib, dc, ld,1,2,2,1);
+		ib->setExits(kt, nullptr, nullptr, nullptr,10,NULL,NULL,NULL);
+		ld->setExits(br, wr, kt, nullptr,1,10,1,NULL);
+		gh->setExits(br, kt, tr, mr,2,1,2,4);
+		br->setExits(nullptr, ld, gh, nullptr,NULL,1,2,NULL);
+		tr->setExits(lb, gh, nullptr, mr,1,2,NULL,3);
+		lb->setExits(nullptr, tr, nullptr, mr,NULL,1,NULL,3);
+		mr->setExits(lb, tr, gh, nullptr,3,4,3,NULL);
 
 		//adding location to vector (for looping if needed)
 		locations.push_back(en);
@@ -223,7 +244,7 @@ int main()
 	{
 		cout << "-999 to exit" << endl;
 		player->currentLoc->getDesc();
-		
+		player->getEnergy();
 		player->travel();
 		
 
