@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<stdlib.h>
 using namespace std;
 
 
@@ -185,7 +186,7 @@ public:
 		Location* br = new Location("Bottle Room" ,"You are in Bottle Room, you see passage to the (2)Larder on the south and entrance to the (3)Great Hall to the west.");
 		Location* tr = new Location("Trolls Room","You see trolls gathered around a bonfire, better keep quiet. You can go to the (1)Library or (4)Mysterious Room.");
 		Location* lb = new Location("Library","Books, books, books, so much knowlegde, if only you could read... You see only one door leading south to (2)Trolls Room... but wait! You spot a secret entrence to the (4)Mysterious Room.");
-		Location* mr = new Location("Mysterious Room","You are in the Mysterious Room. You get the whole mystery now. Not that amazing. You can travel north to (1)Library, south to (2)Great Hall");
+		Location* mr = new Location("Mysterious Room","You are in the Mysterious Room. You get the whole mystery now. Not that amazing. You can travel north to (1)Library, south to (2)Trolls Room or west to (3)Great Hall.");
 		
 		//setting up exits for each location
 		en->setExits(dc, nullptr, nullptr, nullptr,2,NULL,NULL,NULL);
@@ -246,7 +247,7 @@ int main()
 		player->currentLoc->getDesc();
 		player->getEnergy();
 		player->travel();
-		
+		system("CLS");
 
 	}
 	
