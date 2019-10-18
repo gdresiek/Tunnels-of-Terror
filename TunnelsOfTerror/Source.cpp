@@ -72,6 +72,7 @@ public:
 	Location* getLocation();
 	void travel();
 	void getEnergy();
+	int retEnergy();
 };
 
 //PLAYER FUNCTIONS
@@ -79,6 +80,10 @@ public:
 Player::Player() {}
 Player::~Player() {}
 
+int Player::retEnergy()
+{
+	return energy;
+}
 void Player::getEnergy()
 {
 	cout << "Energy left: " << energy << endl;
@@ -184,7 +189,7 @@ public:
 		Location* ld = new Location("Larder","You are in the Larder, you can go north to (1)Bottle Room, south to (2)Well Room or west to (3)Kitchen.");
 		Location* gh = new Location("Great Hall","You are in the Great Hall. It looks trully impressive. You can travel north to (1)Bottle Room, south to (2)Kitchen, west to (3)Trolls Room or east to (4)Mysterious Room.");
 		Location* br = new Location("Bottle Room" ,"You are in Bottle Room, you see passage to the (2)Larder on the south and entrance to the (3)Great Hall to the west.");
-		Location* tr = new Location("Trolls Room","You see trolls gathered around a bonfire, better keep quiet. You can go to the (1)Library or (4)Mysterious Room.");
+		Location* tr = new Location("Trolls Room","You see trolls gathered around a bonfire, better keep quiet. You can go to the (1)Library, (2)Great Hall or (4)Mysterious Room.");
 		Location* lb = new Location("Library","Books, books, books, so much knowlegde, if only you could read... You see only one door leading south to (2)Trolls Room... but wait! You spot a secret entrence to the (4)Mysterious Room.");
 		Location* mr = new Location("Mysterious Room","You are in the Mysterious Room. You get the whole mystery now. Not that amazing. You can travel north to (1)Library, south to (2)Trolls Room or west to (3)Great Hall.");
 		
@@ -238,20 +243,25 @@ class DFSsearch
 	{
 		Location* location;
 		bool visited = false;
+	
 	};
+
+	
 	
 	void search()
 	{
 		
 	}
-	DFSsearch(int nR, Location* s, Location* t, vector<Location*> l)
+	DFSsearch(int nR, Node s, Node t, vector<Location*> l)
 	{
-		noRooms = nR;
-		start = s;
-		target = t;
-		list = l;
-
 		
+		
+		
+
+		vector<Node*> vList;
+		
+		//vList.push_back(s);
+
 	}
 
 
@@ -279,9 +289,12 @@ int main()
 		player->currentLoc->getDesc();
 		player->getEnergy();
 		player->travel();
-		system("CLS");
-
+		if (player->energy < 1)
+			break;
+		
+		
 	}
+	cout << "You died." << endl;
 	
 	getchar();
 	getchar();
